@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>BoardList</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div id="result">
+      <table>        
+        <tr>
+          <th>글번호</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>작성일</th>
+        </tr>
+        <template v-if="isShow">
+          <tr v-for="article in articles" :key="article.articleNo">
+            <td v-text="article.articleNo" @click="showOther(article.articleNo)" ></td>
+            <td v-text="article.subject" @click="showId(article.articleNo)"></td>        
+            <td>{{article.userName}}</td>
+            <td>{{article.registerTime | showDay}}</td>
+            <td @click="deleteArti(article.articleNo)">삭제</td>
+          </tr>
+        </template>
+        <template v-else>       
+          <tr>
+            <td colspan="4">작성된 글이 없습니다</td>
+          </tr>
+        </template>
+      </table>
+    </div>
+
+    <div v-if="isShow2">
+        <table>
+          <tr>
+              <th>번호</th>
+              <td v-text="articel.articleNo"></td>
+          </tr>
+          <tr>
+            <th>작성자</th>
+            <td v-text="articel.userId"></td>
+        </tr>
+        <tr>
+          <th>제목</th>
+          <td v-text="articel.subject"></td>
+      </tr>
+      <tr>
+        <th>조회수</th>
+        <td v-text="articel.hit"></td>
+      </tr>
+      <tr>
+        <th>작성일</th>
+        <td>{{articel.registerTime | showDay}}</td>
+      </tr>
+      <tr>
+        <th>내용</th>
+        <td><textarea name="" id="" cols="30" rows="10">{{articel.content}}</textarea></td>
+      </tr>
+        </table>
+    </div>
+  </div>  
+  
+  <a href="./write.html">글쓰기</a>
+
+  <script>
+    const addr="http://localhost:8080/board10/board";
+    new Vue({
+      el: "#app",
+      data: function(){
+        return{
+          articles: [],
+          isShow: true,
+          articel: [],
+          isShow2: false,
+        }
+      },
+      created() {
+        axios
+        .get(addr+"/")
+        .then((response)=>{
+          console.log("---------------");
+          console.log(response)
+          this.articles = response.data;
+          this.isShow= true;
+        })
+        .catch((error)=>{
+          this.isShow = false;
+        });
+      },
+      filters:{
+        showDay(value){
+            return value != null ? value.substr(0, 10):"";
+        },
+      },
+      methods: {
+        showId(no){
+          axios
+          .get(`${addr}/${no}`)
+          .then((response)=>{
+            this.articel = response.data;
+            this.isShow2=true;
+            // console.log(this.articel)
+          })
+          .catch((error)=>{
+            console.log("")
+          })          
+        },
+        showOther(no){
+          location.href="./detail.html?articleNo="+no;
+        },
+        deleteArti(no){
+          axios
+          .delete(`${addr}/${no}`)
+          .then((response)=>{
+            this.articles = response.data;
+            this.isShow= true;
+          })
+          .catch((error)=>{
+            this.isShow=false;
+          });
+        },
+      },
+    });
+  </script>
+</body>
+</html>
