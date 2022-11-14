@@ -37,13 +37,13 @@
               </b-form>
             </div>
           </div>
-          <b-table class="table table-hover">
+          <b-table-simple striped hover small caption-top responsive>
             <colgroup>
               <col style="width: 5%" />
-              <col style="width: 45%" />
+              <col style="width: 35%" />
               <col style="width: 25%" />
               <col style="width: 5%" />
-              <col style="width: 20%" />
+              <col style="width: 30%" />
             </colgroup>
             <b-thead>
               <b-tr class="text-center">
@@ -62,7 +62,7 @@
                 :index="index"
               ></article-item>
             </b-tbody>
-          </b-table>
+          </b-table-simple>
         </div>
       </div>
     </b-container>
@@ -101,8 +101,8 @@ export default {
       http
         .get(`/rest?pgno=${this.pgno}&key=${this.subkey}&word=${this.word}`)
         .then(({ data }) => {
-          console.log(JSON.stringify(data));
           this.articles = data;
+          console.log(JSON.stringify(this.articles));
         })
         .catch((error) => {
           console.log(error);

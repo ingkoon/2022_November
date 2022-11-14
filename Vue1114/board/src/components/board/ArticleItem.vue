@@ -1,10 +1,11 @@
 <template>
   <b-tr>
-    <b-td v-text="index + 1"></b-td>
+    <b-td v-text="article.articleNo"></b-td>
     <b-td v-text="article.subject"></b-td>
     <b-td v-text="article.userId"></b-td>
     <b-td v-text="article.hit"></b-td>
-    <b-td>{{ article.registerTime }}</b-td>
+    <b-td v-text="article.registerTime"></b-td>
+    <!-- <b-td>{{ article.registerTime }}</b-td> -->
   </b-tr>
 </template>
 <script>
