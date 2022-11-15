@@ -17,8 +17,8 @@
             </div>
             <div class="col-md-7 offset-3">
               <b-form class="d-flex">
-                <input type="hidden" name="act" value="list" />
-                <input type="hidden" name="pgno" value="1" />
+                <!-- <input type="hidden" name="act" value="list" />
+                <input type="hidden" name="pgno" value="1" /> -->
                 <b-form-select
                   class="form-select form-select-sm ms-5 me-1 w-50"
                   v-model="selected"
@@ -27,6 +27,7 @@
                 <div class="input-group input-group-sm">
                   <b-form-input
                     v-model="searchText"
+                    F
                     class="form-control"
                     placeholder="검색어..."
                   />
@@ -99,7 +100,7 @@ export default {
   methods: {
     boardlist() {
       http
-        .get(`/rest?pgno=${this.pgno}&key=${this.subkey}&word=${this.word}`)
+        .get(`/list?pgno=${this.pgno}&key=${this.subkey}&word=${this.word}`)
         .then(({ data }) => {
           this.articles = data;
           console.log(JSON.stringify(this.articles));
