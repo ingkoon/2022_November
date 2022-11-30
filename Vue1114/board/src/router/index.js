@@ -2,7 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import BoardView from "@/views/BoardView.vue";
-import BoardList from "@/components/board/BoardList.vue";
+import BoardList from "@/components/board/BoardDetail.vue";
+import BoardDetail from "@/components/board/BoardDetail.vue";
 
 Vue.use(VueRouter);
 
@@ -25,11 +26,17 @@ const routes = [
     path: "/board",
     name: "board",
     component: BoardView,
+    redirect: "/board/list",
     children: [
       {
-        path: "/list",
+        path: "list",
         name: "list",
         component: BoardList,
+      },
+      {
+        path: "detail/:articleNo",
+        name: "detail",
+        component: BoardDetail,
       },
     ],
   },

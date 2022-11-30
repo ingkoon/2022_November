@@ -1,12 +1,20 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/board">board</router-link>
-    </nav>
+    <header-bar />
+    <board-view></board-view>
     <router-view />
   </div>
 </template>
+<script>
+import HeaderBar from "@/components/nav/Header.vue";
+
+export default {
+  name: "App",
+  components: {
+    HeaderBar,
+  },
+};
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
